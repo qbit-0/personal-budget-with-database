@@ -1,0 +1,224 @@
+openapi: 3.0.0
+info:
+  title: Budget
+  description: API for budgeting with envelopes.
+  version: 1.0.0-oas3
+servers:
+- url: /
+paths:
+  /envelopes:
+    summary: Read all envelopes
+    description: Read all envelopes
+    get:
+      tags:
+      - Envelopes
+      summary: Read all envelopes
+      description: Read all envelopes
+      operationId: readEnvelopes
+      responses:
+        "200":
+          description: The envelopes to be returned
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Envelope'
+  /envelopes/{category}:
+    summary: "Read, update, or delete an enevelope"
+    description: "Read, update, or delete the envelope of matching category"
+    get:
+      tags:
+      - Envelopes
+      summary: Read an envelope
+      description: Read the envelope of matching category
+      operationId: readEnvelope
+      parameters:
+      - name: category
+        in: path
+        description: The category of the envelope
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: gas
+      responses:
+        "200":
+          description: The envelope to be returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+        "404":
+          description: The envelope with matching category does not exist
+    put:
+      tags:
+      - Envelopes
+      summary: Update an envelope
+      description: Update the envelope with matching category
+      operationId: updateEnvelope
+      parameters:
+      - name: category
+        in: path
+        description: The category of the envelope
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: gas
+      responses:
+        "200":
+          description: The updated envelope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+        "404":
+          description: The envelope with matching category does not exist
+    delete:
+      tags:
+      - Envelopes
+      summary: Delete an envelope
+      description: Delete the envelope with matching category
+      operationId: deleteEnvelope
+      parameters:
+      - name: category
+        in: path
+        description: The category of the envelope
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: gas
+      responses:
+        "204":
+          description: Envelope deleted
+        "404":
+          description: The envelope with matching category does not exist
+  /envelopes/{category}/withdrawal:
+    summary: Make a withdrawal
+    description: Make a withdrawal from the envelope of matching category
+    post:
+      tags:
+      - Envelopes
+      summary: Withdraw from an envelope
+      description: Withdraw from the envelope of matching category
+      operationId: withdrawEnvelope
+      parameters:
+      - name: category
+        in: path
+        description: The category of the envelope
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: gas
+      - name: amount
+        in: query
+        description: The amount to withdraw or deposit
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: money
+        example: 12.34
+      responses:
+        "200":
+          description: The updated envelope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /envelopes/{category}/deposit:
+    summary: Make a deposit
+    description: Make a deposit to the envelope of matching category
+    post:
+      tags:
+      - Envelopes
+      summary: Deposit to an envelope
+      description: Deposit to the envelope of matching category
+      operationId: depositEnvelope
+      parameters:
+      - name: category
+        in: path
+        description: The category of the envelope
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: gas
+      - name: amount
+        in: query
+        description: The amount to withdraw or deposit
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: number
+          format: money
+        example: 12.34
+      responses:
+        "200":
+          description: The updated envelope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /new-envelope:
+    summary: Create a new envelope
+    description: Create a new envelope
+    post:
+      tags:
+      - Envelopes
+      summary: Create a new envelope
+      operationId: createEnvelope
+      responses:
+        "200":
+          description: The created envelope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+components:
+  schemas:
+    Envelope:
+      type: object
+      properties:
+        category:
+          type: string
+        balance:
+          type: number
+          format: money
+      example: |-
+        {
+          category: gas,
+          balance: 123.45
+        }
+  parameters:
+    Category:
+      name: category
+      in: path
+      description: The category of the envelope
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: gas
+    Amount:
+      name: amount
+      in: query
+      description: The amount to withdraw or deposit
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: number
+        format: money
+      example: 12.34
