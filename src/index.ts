@@ -2,7 +2,7 @@ import envelopes, { Envelope } from "./envelopes";
 
 import express from "express";
 const app = express();
-const port = process.env["PORT"] || 8080;
+const PORT = process.env["PORT"] || 8080;
 
 declare global {
     namespace Express {
@@ -92,8 +92,8 @@ app.post("/new-envelope", express.json(), (req, res) => {
     res.status(201).send(envelopes[category]);
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
     console.log(
-        `Express server listening on port ${port} in ${app.settings.env} mode`
+        `Express server listening on port ${PORT} in ${app.settings.env} mode`
     );
 });
