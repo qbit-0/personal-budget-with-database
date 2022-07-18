@@ -20,7 +20,8 @@
     },
     "homepage": "https://github.com/qbit-0/personal-budget-with-database#readme",
     "dependencies": {
-        "express": "^4.18.1"
+        "express": "^4.18.1",
+        "pg": "^8.7.3"
     },
     "devDependencies": {
         "@types/express": "^4.17.13",
