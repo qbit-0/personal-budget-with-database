@@ -19,7 +19,7 @@
     "bugs": {
         "url": "https://github.com/qbit-0/personal-budget-with-database/issues"
     },
-    "homepage": "https://github.com/qbit-0/personal-budget-with-database#readme",
+    "homepage": "https://qbit-0-personal-budgeting.herokuapp.com/",
     "dependencies": {
         "express": "^4.18.1",
         "pg": "^8.7.3"
