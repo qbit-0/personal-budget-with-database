@@ -7,17 +7,17 @@ servers:
 - url: /
 paths:
   /envelopes:
-    summary: Read all envelopes
-    description: Read all envelopes
+    summary: Read all envelopes.
+    description: Read all envelopes.
     get:
       tags:
       - Envelopes
-      summary: Read all envelopes
-      description: Read all envelopes
+      summary: Read all envelopes.
+      description: Read all envelopes.
       operationId: readEnvelopes
       responses:
         "200":
-          description: The envelopes to be returned
+          description: The envelopes to be returned.
           content:
             application/json:
               schema:
@@ -25,18 +25,18 @@ paths:
                 additionalProperties:
                   $ref: '#/components/schemas/Envelope'
   /envelopes/{category}:
-    summary: "Read, update, or delete an enevelope"
-    description: "Read, update, or delete the envelope of matching category"
+    summary: "Read, update, or delete an enevelope."
+    description: "Read, update, or delete the envelope of matching category."
     get:
       tags:
       - Envelopes
-      summary: Read an envelope
-      description: Read the envelope of matching category
+      summary: Read an envelope.
+      description: Read the envelope of matching category.
       operationId: readEnvelope
       parameters:
       - name: category
         in: path
-        description: The category of the envelope
+        description: The category of the envelope.
         required: true
         style: simple
         explode: false
@@ -45,23 +45,23 @@ paths:
         example: gas
       responses:
         "200":
-          description: The envelope to be returned
+          description: The envelope to be returned.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Envelope'
         "404":
-          description: The envelope with matching category does not exist
+          description: Envelope with matching category not found.
     put:
       tags:
       - Envelopes
-      summary: Update an envelope
-      description: Update the envelope with matching category
+      summary: Update an envelope.
+      description: Update the envelope with matching category.
       operationId: updateEnvelope
       parameters:
       - name: category
         in: path
-        description: The category of the envelope
+        description: The category of the envelope.
         required: true
         style: simple
         explode: false
@@ -70,23 +70,23 @@ paths:
         example: gas
       responses:
         "200":
-          description: The updated envelope
+          description: The updated envelope.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Envelope'
         "404":
-          description: The envelope with matching category does not exist
+          description: Envelope with matching category not found.
     delete:
       tags:
       - Envelopes
-      summary: Delete an envelope
-      description: Delete the envelope with matching category
+      summary: Delete an envelope.
+      description: Delete the envelope with matching category.
       operationId: deleteEnvelope
       parameters:
       - name: category
         in: path
-        description: The category of the envelope
+        description: The category of the envelope.
         required: true
         style: simple
         explode: false
@@ -95,22 +95,24 @@ paths:
         example: gas
       responses:
         "204":
-          description: Envelope deleted
+          description: Envelope deleted.
         "404":
-          description: The envelope with matching category does not exist
-  /envelopes/{category}/withdrawal:
-    summary: Make a withdrawal
-    description: Make a withdrawal from the envelope of matching category
+          description: Envelope with matching category not found.
+  /envelopes/{category}/exchange:
+    summary: Make a withdrawal or deposit.
+    description: "Make a withdrawal or deposit from the envelope of matching category.\
+      \ A negative amount is a withdrawal, a positive amount is a deposit."
     post:
       tags:
       - Envelopes
-      summary: Withdraw from an envelope
-      description: Withdraw from the envelope of matching category
-      operationId: withdrawEnvelope
+      summary: Make a withdrawal or deposit.
+      description: "Make a withdrawal or deposit from the envelope of matching category.\
+        \ A negative amount is a withdrawal, a positive amount is a deposit."
+      operationId: exchangeEnvelope
       parameters:
       - name: category
         in: path
-        description: The category of the envelope
+        description: The category of the envelope.
         required: true
         style: simple
         explode: false
@@ -119,7 +121,7 @@ paths:
         example: gas
       - name: amount
         in: query
-        description: The amount to withdraw or deposit
+        description: The amount to withdraw or deposit.
         required: true
         style: form
         explode: true
@@ -129,58 +131,22 @@ paths:
         example: 12.34
       responses:
         "200":
-          description: The updated envelope
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Envelope'
-  /envelopes/{category}/deposit:
-    summary: Make a deposit
-    description: Make a deposit to the envelope of matching category
-    post:
-      tags:
-      - Envelopes
-      summary: Deposit to an envelope
-      description: Deposit to the envelope of matching category
-      operationId: depositEnvelope
-      parameters:
-      - name: category
-        in: path
-        description: The category of the envelope
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-        example: gas
-      - name: amount
-        in: query
-        description: The amount to withdraw or deposit
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: number
-          format: money
-        example: 12.34
-      responses:
-        "200":
-          description: The updated envelope
+          description: The updated envelope.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Envelope'
   /new-envelope:
-    summary: Create a new envelope
-    description: Create a new envelope
+    summary: Create a new envelope.
+    description: Create a new envelope.
     post:
       tags:
       - Envelopes
-      summary: Create a new envelope
+      summary: Create a new envelope.
       operationId: createEnvelope
       responses:
         "200":
-          description: The created envelope
+          description: The created envelope.
           content:
             application/json:
               schema:
@@ -204,7 +170,7 @@ components:
     Category:
       name: category
       in: path
-      description: The category of the envelope
+      description: The category of the envelope.
       required: true
       style: simple
       explode: false
@@ -214,7 +180,7 @@ components:
     Amount:
       name: amount
       in: query
-      description: The amount to withdraw or deposit
+      description: The amount to withdraw or deposit.
       required: true
       style: form
       explode: true
