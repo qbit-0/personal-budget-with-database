@@ -21,8 +21,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties:
+                type: array
+                items:
                   $ref: '#/components/schemas/Envelope'
   /envelopes/{category}:
     summary: "Read, update, or delete an enevelope."
