@@ -51,7 +51,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Envelope'
         "404":
-          description: The envelope with matching category does not exist
+          description: Envelope with matching category not found.
     put:
       tags:
       - Envelopes
@@ -76,7 +76,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Envelope'
         "404":
-          description: The envelope with matching category does not exist
+          description: Envelope with matching category not found.
     delete:
       tags:
       - Envelopes
@@ -97,7 +97,7 @@ paths:
         "204":
           description: Envelope deleted
         "404":
-          description: The envelope with matching category does not exist
+          description: Envelope with matching category not found.
   /envelopes/{category}/withdrawal:
     summary: Make a withdrawal
     description: Make a withdrawal from the envelope of matching category
