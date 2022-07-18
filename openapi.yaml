@@ -7,17 +7,17 @@ servers:
 - url: /
 paths:
   /envelopes:
-    summary: Read all envelopes
-    description: Read all envelopes
+    summary: Read all envelopes.
+    description: Read all envelopes.
     get:
       tags:
       - Envelopes
-      summary: Read all envelopes
-      description: Read all envelopes
+      summary: Read all envelopes.
+      description: Read all envelopes.
       operationId: readEnvelopes
       responses:
         "200":
-          description: The envelopes to be returned
+          description: The envelopes to be returned.
           content:
             application/json:
               schema:
@@ -25,13 +25,13 @@ paths:
                 additionalProperties:
                   $ref: '#/components/schemas/Envelope'
   /envelopes/{category}:
-    summary: "Read, update, or delete an enevelope"
-    description: "Read, update, or delete the envelope of matching category"
+    summary: "Read, update, or delete an enevelope."
+    description: "Read, update, or delete the envelope of matching category."
     get:
       tags:
       - Envelopes
-      summary: Read an envelope
-      description: Read the envelope of matching category
+      summary: Read an envelope.
+      description: Read the envelope of matching category.
       operationId: readEnvelope
       parameters:
       - name: category
@@ -45,7 +45,7 @@ paths:
         example: gas
       responses:
         "200":
-          description: The envelope to be returned
+          description: The envelope to be returned.
           content:
             application/json:
               schema:
@@ -55,8 +55,8 @@ paths:
     put:
       tags:
       - Envelopes
-      summary: Update an envelope
-      description: Update the envelope with matching category
+      summary: Update an envelope.
+      description: Update the envelope with matching category.
       operationId: updateEnvelope
       parameters:
       - name: category
@@ -70,7 +70,7 @@ paths:
         example: gas
       responses:
         "200":
-          description: The updated envelope
+          description: The updated envelope.
           content:
             application/json:
               schema:
@@ -80,8 +80,8 @@ paths:
     delete:
       tags:
       - Envelopes
-      summary: Delete an envelope
-      description: Delete the envelope with matching category
+      summary: Delete an envelope.
+      description: Delete the envelope with matching category.
       operationId: deleteEnvelope
       parameters:
       - name: category
@@ -95,17 +95,17 @@ paths:
         example: gas
       responses:
         "204":
-          description: Envelope deleted
+          description: Envelope deleted.
         "404":
           description: Envelope with matching category not found.
   /envelopes/{category}/withdrawal:
-    summary: Make a withdrawal
-    description: Make a withdrawal from the envelope of matching category
+    summary: Make a withdrawal.
+    description: Make a withdrawal from the envelope of matching category.
     post:
       tags:
       - Envelopes
-      summary: Withdraw from an envelope
-      description: Withdraw from the envelope of matching category
+      summary: Withdraw from an envelope.
+      description: Withdraw from the envelope of matching category.
       operationId: withdrawEnvelope
       parameters:
       - name: category
