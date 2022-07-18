@@ -21,8 +21,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
+                type: object
+                additionalProperties:
                   $ref: '#/components/schemas/Envelope'
   /envelopes/{category}:
     summary: "Read, update, or delete an enevelope."
@@ -127,7 +127,7 @@ paths:
         explode: true
         schema:
           type: number
-          format: money
+          format: float
         example: 12.34
       responses:
         "200":
@@ -160,7 +160,7 @@ components:
           type: string
         balance:
           type: number
-          format: money
+          format: float
       example: |-
         {
           category: gas,
@@ -186,5 +186,5 @@ components:
       explode: true
       schema:
         type: number
-        format: money
+        format: float
       example: 12.34
