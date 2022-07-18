@@ -92,6 +92,8 @@ app.post("/new-envelope", express.json(), (req, res) => {
     res.status(201).send(envelopes[category]);
 });
 
+app.use(express.static("build"));
+
 app.listen(PORT, () => {
     console.log(
         `Express server listening on port ${PORT} in ${app.settings.env} mode`
