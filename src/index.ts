@@ -1,9 +1,8 @@
 import envelopes, { Envelope } from "./envelopes";
 
-import express, { application, Request } from "express";
-import { request } from "http";
+import express from "express";
 const app = express();
-const port = 3000;
+const port = process.env["PORT"] || "8080";
 
 declare global {
     namespace Express {
