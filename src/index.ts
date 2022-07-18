@@ -24,7 +24,7 @@ app.param("category", (req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("Budget App");
 });
 
 app.get("/envelopes", (req, res) => {
@@ -91,8 +91,6 @@ app.post("/new-envelope", express.json(), (req, res) => {
     envelopes[category] = envelope;
     res.status(201).send(envelopes[category]);
 });
-
-app.use(express.static("build"));
 
 app.listen(PORT, () => {
     console.log(
