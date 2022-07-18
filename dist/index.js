@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const envelopes_1 = __importDefault(require("./envelopes"));
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
-const port = 3000;
+const port = process.env["PORT"] || "8080";
 app.param("category", (req, res, next) => {
     const category = req.params["category"];
     const envelope = envelopes_1.default[category];
