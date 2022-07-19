@@ -1,6 +1,12 @@
-import envelopes, { Envelope } from "./envelopes";
-
 import express from "express";
+import {
+    createEnvelope,
+    deleteEnvelope,
+    Envelope,
+    readEnvelope,
+    readEnvelopes,
+    updateEnvelope,
+} from "./db/queries";
 const app = express();
 const PORT = process.env["PORT"] || 8080;
 
@@ -12,9 +18,10 @@ declare global {
     }
 }
 
-app.param("category", (req, res, next) => {
+app.param("category", async (req, res, next) => {
     const category = req.params["category"];
-    const envelope = envelopes[category];
+    const envelope = await readEnvelope(category);
+
     if (envelope === undefined) {
         res.status(404).send("Envelope with matching category not found.");
         return;
@@ -27,17 +34,17 @@ app.get("/", (req, res) => {
     res.send("Budget App");
 });
 
-app.get("/envelopes", (req, res) => {
-    res.send(envelopes);
+app.get("/envelopes", async (req, res) => {
+    const envelopes = await readEnvelopes();
+    res.json(envelopes);
 });
 
 app.get("/envelopes/:category", (req, res) => {
     res.send(req.envelope);
 });
 
-app.put("/envelopes/:category", express.json(), (req, res) => {
-    const body = req.body;
-    const envelope = body as Envelope;
+app.put("/envelopes/:category", express.json(), async (req, res) => {
+    const envelope = req.body as Envelope;
     if (!envelope) {
         res.status(400).send("Invalid envelope.");
         return;
@@ -51,32 +58,31 @@ app.put("/envelopes/:category", express.json(), (req, res) => {
         return;
     }
 
-    if (!envelopes[category]) {
-        envelopes[category] = envelope;
-        res.status(201).send(envelopes[category]);
-    } else {
-        envelopes[category] = envelope;
-        res.send(envelopes[category]);
-    }
+    await updateEnvelope(envelope);
+    res.send(await readEnvelope(category));
 });
 
-app.delete("/envelopes/:category", (req, res) => {
-    delete envelopes[req.params.category];
+app.delete("/envelopes/:category", async (req, res) => {
+    await deleteEnvelope(req.params.category);
     res.status(204).send();
 });
 
-app.post("/envelopes/:category/exchange", (req, res) => {
+app.post("/envelopes/:category/exchange", async (req, res) => {
     const amount = Number.parseFloat(req.query["amount"] as string);
     if (amount === NaN) {
         res.status(400).send("Invalid amount.");
+        return;
     }
 
     const category = req.params.category;
-    envelopes[category].balance += amount;
-    res.send(envelopes[category]);
+    const envelope = req.envelope as Envelope;
+    envelope.balance += amount;
+
+    await updateEnvelope(envelope);
+    res.send(await readEnvelope(category));
 });
 
-app.post("/new-envelope", express.json(), (req, res) => {
+app.post("/new-envelope", express.json(), async (req, res) => {
     const envelope = req.body as Envelope;
     if (!envelope) {
         res.status(400).send("Invalid envelope.");
@@ -84,12 +90,13 @@ app.post("/new-envelope", express.json(), (req, res) => {
     }
 
     const category = envelope.category;
-    if (envelopes[category]) {
+    if (await readEnvelope(category)) {
         res.status(400).send("Envelope category already exists.");
+        return;
     }
 
-    envelopes[category] = envelope;
-    res.status(201).send(envelopes[category]);
+    await createEnvelope(envelope);
+    res.status(201).send(await readEnvelope(category));
 });
 
 app.listen(PORT, () => {
