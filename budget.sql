@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS envelopes (
+    category VARCHAR(100) PRIMARY KEY NOT NULL,
+    balance NUMERIC(12, 2) NOT NULL
+);
